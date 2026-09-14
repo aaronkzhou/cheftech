@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Stars from '../components/Stars.jsx'
+import DishIcon from '../components/DishIcon.jsx'
 import { restaurant, menu, deals } from '../data.js'
 
 const serviceIcons = {
@@ -14,7 +15,7 @@ const serviceIcons = {
   ),
 }
 
-const featured = menu.flatMap((s) => s.items).slice(0, 4)
+const featured = menu.flatMap((s) => s.items).filter((_, i) => i % 3 === 0).slice(0, 4)
 
 export default function Home() {
   return (
@@ -130,8 +131,8 @@ export default function Home() {
                 className="group flex flex-col justify-between rounded-2xl border border-ink/5 bg-cream p-5 transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <div>
-                  <div className="flex h-24 items-center justify-center rounded-xl bg-chili-100 text-4xl">
-                    🥢
+                  <div className="flex h-24 items-center justify-center rounded-xl bg-chili-100">
+                    <DishIcon icon={item.icon} className="h-14 w-20" />
                   </div>
                   <p className="mt-4 font-display text-lg font-bold text-ink">{item.zh}</p>
                   <p className="text-xs text-ink/50">{item.en}</p>

@@ -1,4 +1,5 @@
 import { menu, deals, restaurant } from '../data.js'
+import DishIcon from '../components/DishIcon.jsx'
 
 export default function Menu() {
   return (
@@ -33,8 +34,8 @@ export default function Menu() {
               {section.items.map((item) => (
                 <div key={item.en} className="flex items-center justify-between gap-4 px-5 py-4">
                   <div className="flex items-center gap-4">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-chili-50 text-xl">
-                      🥢
+                    <span className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-chili-50">
+                      <DishIcon icon={item.icon} className="h-10 w-14" />
                     </span>
                     <div>
                       <p className="font-semibold text-ink">
