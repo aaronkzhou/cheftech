@@ -106,6 +106,15 @@ const icons = {
       <path d="M15 26c3-8 4-8 6 0M23 26c3-8 4-8 6 0M31 26c3-8 4-8 6 0M39 26c3-8 4-8 6 0" stroke="#f59e0b" strokeWidth="2.4" fill="none" strokeLinecap="round" />
     </>
   ),
+  dumpling: (
+    <>
+      {bowl('#fde68a')}
+      <path d="M30 14c6 0 10 4 10 8s-4 8-10 8-10-4-10-8 4-8 10-8z" fill="#fef3c7" stroke="#c9a86a" strokeWidth="1.2" />
+      <path d="M30 14v16" stroke="#c9a86a" strokeWidth="1" />
+      <circle cx="24" cy="20" r="1.3" fill="#e56d51" />
+      <circle cx="36" cy="24" r="1.3" fill="#e56d51" />
+    </>
+  ),
   drink: (
     <>
       <path d="M20 14h20l-3 26a3 3 0 01-3 3H26a3 3 0 01-3-3z" fill="#fbe3de" stroke="#b8331c" strokeWidth="1.5" />

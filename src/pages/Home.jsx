@@ -2,15 +2,16 @@ import { Link } from 'react-router-dom'
 import Stars from '../components/Stars.jsx'
 import DishIcon from '../components/DishIcon.jsx'
 import { restaurant, menu, deals } from '../data.js'
+import { useLanguage } from '../LanguageContext.jsx'
 
 const serviceIcons = {
-  '堂食 Dine-in': (
+  dinein: (
     <path d="M4 3v10M4 3a2 2 0 012 2v3a2 2 0 01-2 2m0-7a2 2 0 00-2 2v3a2 2 0 002 2m8-7v14m8-14c-2.2 0-4 2-4 5s1.8 5 4 5m0-10v14" />
   ),
-  '外带 Takeaway': (
+  takeaway: (
     <path d="M4 8h16l-1.2 10.2a2 2 0 01-2 1.8H7.2a2 2 0 01-2-1.8L4 8zM8 8V6a4 4 0 118 0v2" />
   ),
-  '外送 Delivery': (
+  delivery: (
     <path d="M3 7h11v8H3zM14 10h4l3 3v2h-7zM6.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm12 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
   ),
 }
@@ -18,6 +19,8 @@ const serviceIcons = {
 const featured = menu.flatMap((s) => s.items).filter((_, i) => i % 3 === 0).slice(0, 4)
 
 export default function Home() {
+  const { t } = useLanguage()
+
   return (
     <div>
       {/* Hero */}
@@ -27,13 +30,15 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-6xl px-5 py-16 sm:py-24">
           <span className="inline-block rounded-full bg-cream/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
-            亚洲混合风味 · Asian Fusion
+            {t(restaurant.cuisine, restaurant.cuisineEn)}
           </span>
 
           <h1 className="mt-5 font-display text-4xl font-black leading-tight sm:text-6xl">
-            川小碗<span className="text-chili-200">·</span>中华现炒大王
+            {t(restaurant.nameZh, restaurant.nameEn)}
           </h1>
-          <p className="mt-2 text-lg font-medium text-cream/80 sm:text-xl">Munch Bowl Melbourne</p>
+          <p className="mt-2 text-lg font-medium text-cream/80 sm:text-xl">
+            {t(restaurant.nameEn, restaurant.nameZh)}
+          </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm sm:text-base">
             <span className="flex items-center gap-1.5 font-semibold">
@@ -51,13 +56,13 @@ export default function Home() {
               to="/menu"
               className="rounded-full bg-cream px-6 py-3 text-sm font-bold text-chili-700 shadow-lg shadow-ink/10 transition hover:bg-chili-50"
             >
-              查看菜单 View Menu
+              {t('查看菜单', 'View Menu')}
             </Link>
             <a
               href="#location"
               className="rounded-full border border-cream/40 px-6 py-3 text-sm font-bold text-cream transition hover:bg-cream/10"
             >
-              门店位置 Find Us
+              {t('门店位置', 'Find Us')}
             </a>
           </div>
         </div>
@@ -67,13 +72,13 @@ export default function Home() {
       <section className="mx-auto -mt-8 max-w-6xl px-5">
         <div className="grid gap-4 rounded-2xl bg-cream p-4 shadow-xl shadow-ink/10 ring-1 ring-ink/5 sm:grid-cols-3">
           {restaurant.services.map((s) => (
-            <div key={s} className="flex items-center gap-3 rounded-xl px-3 py-2">
+            <div key={s.key} className="flex items-center gap-3 rounded-xl px-3 py-2">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-chili-50 text-chili-600">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  {serviceIcons[s]}
+                  {serviceIcons[s.key]}
                 </svg>
               </span>
-              <span className="text-sm font-semibold text-ink">{s}</span>
+              <span className="text-sm font-semibold text-ink">{t(s.zh, s.en)}</span>
             </div>
           ))}
         </div>
@@ -83,22 +88,23 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
         <div className="grid gap-10 sm:grid-cols-2 sm:gap-16">
           <div>
-            <h2 className="font-display text-3xl font-bold text-ink">关于我们 · About</h2>
+            <h2 className="font-display text-3xl font-bold text-ink">{t('关于我们', 'About Us')}</h2>
             <p className="mt-4 leading-relaxed text-ink/70">
-              川小碗·中华现炒大王主打云南、四川风味的地道小碗菜，一菜一味，现点现炒，锅气十足。
-              麻婆豆腐、皮蛋等招牌菜品香辣过瘾，让你在墨尔本市中心也能吃到熟悉的家乡味道。
-            </p>
-            <p className="mt-4 leading-relaxed text-ink/60">
-              Munch Bowl serves Southwest Chinese comfort food — Yunnan &amp; Sichuan-style dishes
-              in mini bowls, wok-fired to order with real heat and proper wok hei, right in the
-              heart of Melbourne.
+              {t(
+                '川小碗·中华现炒大王主打云南、四川风味的地道小碗菜，一菜一味，现点现炒，锅气十足。麻婆豆腐、皮蛋等招牌菜品香辣过瘾，让你在墨尔本市中心也能吃到熟悉的家乡味道。',
+                'Munch Bowl serves Southwest Chinese comfort food — Yunnan & Sichuan-style dishes in mini bowls, wok-fired to order with real heat and proper wok hei, right in the heart of Melbourne.',
+              )}
             </p>
             <p className="mt-6 rounded-xl bg-chili-50 px-4 py-3 text-sm text-chili-800">
-              川小碗 Munch Bowl 是 <span className="font-semibold">ChefTech Solution PTY LTD</span> 旗下位于墨尔本的品牌子公司。
-              <br />
-              <span className="text-chili-700/70">
-                Munch Bowl is a Melbourne-based subsidiary brand of ChefTech Solution PTY LTD.
-              </span>
+              {t(
+                <>
+                  川小碗 Munch Bowl 是 <span className="font-semibold">ChefTech Solution PTY LTD</span> 旗下位于墨尔本的品牌子公司。
+                </>,
+                <>
+                  Munch Bowl is a Melbourne-based subsidiary brand of{' '}
+                  <span className="font-semibold">ChefTech Solution PTY LTD</span>.
+                </>,
+              )}
             </p>
           </div>
 
@@ -106,8 +112,7 @@ export default function Home() {
             {deals.map((d) => (
               <div key={d.en} className="rounded-2xl border border-chili-900/10 bg-white p-5 shadow-sm">
                 <p className="font-display text-2xl font-black text-chili-600">{d.price}</p>
-                <p className="mt-1 text-sm font-semibold text-ink">{d.zh}</p>
-                <p className="text-xs text-ink/50">{d.en}</p>
+                <p className="mt-1 text-sm font-semibold text-ink">{t(d.zh, d.en)}</p>
               </div>
             ))}
           </div>
@@ -118,9 +123,9 @@ export default function Home() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-5">
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-3xl font-bold text-ink">招牌菜品 · Signature Dishes</h2>
+            <h2 className="font-display text-3xl font-bold text-ink">{t('招牌菜品', 'Signature Dishes')}</h2>
             <Link to="/menu" className="text-sm font-semibold text-chili-600 hover:underline">
-              完整菜单 Full menu →
+              {t('完整菜单 →', 'Full menu →')}
             </Link>
           </div>
 
@@ -134,11 +139,8 @@ export default function Home() {
                   <div className="flex h-24 items-center justify-center rounded-xl bg-chili-100">
                     <DishIcon icon={item.icon} className="h-14 w-20" />
                   </div>
-                  <p className="mt-4 font-display text-lg font-bold text-ink">{item.zh}</p>
-                  <p className="text-xs text-ink/50">{item.en}</p>
-                  {item.tags?.length > 0 && (
-                    <p className="mt-1 text-sm">{item.tags.join(' ')}</p>
-                  )}
+                  <p className="mt-4 font-display text-lg font-bold text-ink">{t(item.zh, item.en)}</p>
+                  {item.tags?.length > 0 && <p className="mt-1 text-sm">{item.tags.join(' ')}</p>}
                 </div>
                 <p className="mt-4 font-display text-xl font-black text-chili-600">${item.price}</p>
               </div>
@@ -149,21 +151,20 @@ export default function Home() {
 
       {/* Location & hours */}
       <section id="location" className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
-        <h2 className="font-display text-3xl font-bold text-ink">门店位置 &amp; 营业时间</h2>
-        <p className="text-sm text-ink/50">Location &amp; Hours</p>
+        <h2 className="font-display text-3xl font-bold text-ink">{t('门店位置 & 营业时间', 'Location & Hours')}</h2>
 
         <div className="mt-8 grid gap-8 sm:grid-cols-2">
           <div className="space-y-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-chili-600">地址 Address</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-chili-600">{t('地址', 'Address')}</p>
               <p className="mt-1 text-lg font-semibold text-ink">{restaurant.address}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-chili-600">营业时间 Hours</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-chili-600">{t('营业时间', 'Hours')}</p>
               <ul className="mt-2 space-y-1 text-ink/70">
                 {restaurant.hours.map((h) => (
-                  <li key={h.days} className="flex justify-between gap-4 border-b border-ink/5 py-1.5 text-sm">
-                    <span>{h.days}</span>
+                  <li key={h.en} className="flex justify-between gap-4 border-b border-ink/5 py-1.5 text-sm">
+                    <span>{t(h.zh, h.en)}</span>
                     <span className="font-semibold text-ink">{h.time}</span>
                   </li>
                 ))}
